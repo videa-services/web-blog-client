@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Blogs</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div>
+    <div th:each="blog : ${blogEntries}">
+        <p th:text="${blog.title}"></p>
+        <p th:text="${blog.timestamp}"></p>
+        <p th:text="${blog.content}"></p>
+        <p>--- --- ---</p>
+    </div>
+
+</div>
+<p></p>
+
+</body>
+</html>
