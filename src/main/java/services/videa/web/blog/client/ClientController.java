@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 import services.videa.web.blog.client.dtos.AllBlogs;
 import services.videa.web.blog.client.dtos.BlogEntry;
+import services.videa.web.blog.client.dtos.BlogRequest;
 
 import java.util.List;
 import java.util.Random;
@@ -21,6 +24,12 @@ public class ClientController {
     public ClientController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
+
+    @ModelAttribute("newBlogEntry")
+    public BlogEntry newBlogEntry() {
+        return new BlogEntry();
+    }
+
 
     @GetMapping("/")
     public String home(Model model) {
@@ -46,5 +55,28 @@ public class ClientController {
 
         return "list-all-blogs";
     }
+
+
+    @GetMapping("/newBlogEntry")
+    public String showNewBlogEntry() {
+
+        return "add-new-blog";
+    }
+
+
+    @PostMapping("/addNewBlogEntry")
+    public String addNewBlogEntry(@ModelAttribute("newBlogEntry") BlogEntry blogEntry) {
+
+        BlogRequest blogRequest = new BlogRequest();
+        blogRequest.setTitle(blogEntry.getTitle());
+        blogRequest.setContent(blogEntry.getContent());
+
+        BlogEntry blogEntry1 = restTemplate.postForObject("http://localhost:8080/blog/add",
+                blogRequest, BlogEntry.class);
+
+        // go back to start page and load updated blog list from there
+        return "redirect:/";
+    }
+
 
 }
