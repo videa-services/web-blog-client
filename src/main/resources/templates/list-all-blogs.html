@@ -3,19 +3,42 @@
 <head>
     <title>All Blogs</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 </head>
 <body>
 
-<div>
-    <div th:each="blog : ${blogEntries}">
-        <p th:text="${blog.title}"></p>
-        <p th:text="${blog.timestamp}"></p>
-        <p th:text="${blog.content}"></p>
-        <p>--- --- ---</p>
+<div class="container-fluid">
+
+    <div class="row">
+        <div th:each="blog : ${blogEntries}" class="col-sm-4 card" style="width:400px">
+            <img class="card-img-top" th:src="${blog.picture}" th:alt="${blog.picture}">
+            <div class="card-body">
+                <h4 th:text="${blog.title}" class="card-title"></h4>
+                <p th:text="${blog.timestamp}"></p>
+                <p th:text="${blog.content}" class="card-text"></p>
+
+                <button type="button" class="btn btn-success">
+                    Comments <span th:text="${blog.commentsSize}" class="badge badge-light"></span>
+                </button>
+
+
+            </div>
+        </div>
     </div>
 
 </div>
-<p></p>
+
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>
